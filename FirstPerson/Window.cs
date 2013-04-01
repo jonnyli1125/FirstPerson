@@ -25,6 +25,8 @@ namespace FirstPerson
         private static float VerticalSensitivity = 3;
         private static float Fog = 10000;
         private static float FPS = 60;
+        private static uint GridWidth = 32;
+        private static uint GridLength = 32;
 
         public Window() : base(1280, 720, GraphicsMode.Default, "FirstPerson") { }
 
@@ -109,9 +111,10 @@ namespace FirstPerson
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.LoadMatrix(ref CameraMatrix);
 
-            for (int x = -10; x <= 10; x++)
+            int halfGridWidth = Convert.ToInt32(GridWidth / 2), halfGridLength = Convert.ToInt32(GridLength / 2);
+            for (int x = -halfGridWidth; x <= halfGridWidth; x++)
             {
-                for (int z = -10; z <= 10; z++)
+                for (int z = -halfGridLength; z <= halfGridLength; z++)
                 {
                     GL.PushMatrix();
                     GL.Translate((float)x * 5f, 0f, (float)z * 5f);
@@ -197,6 +200,8 @@ namespace FirstPerson
                         Console.WriteLine("hsensitivity [number] - Gets/sets horizontal mouse sensitivity.");
                         Console.WriteLine("vsensitivity [number] - Gets/sets vertical mouse sensitivity.");
                         Console.WriteLine("fps [number] - Gets/sets frames per second which the game should run on.");
+                        Console.WriteLine("gridwidth [number] - Gets/sets grid width.");
+                        Console.WriteLine("gridlength [number] - Gets/sets grid length.");
                         Console.WriteLine();
                         Console.WriteLine("=== INFORMATION ===");
                         Console.WriteLine("This is FirstPerson v" + Version + ", by Jonny Li.");
@@ -206,6 +211,7 @@ namespace FirstPerson
                         Console.WriteLine("Use SPACE to go up vertically.");
                         Console.WriteLine("Use LSHIFT to go down vertically.");
                         Console.WriteLine("Use R to respawn.");
+                        Console.WriteLine("Use ESC to exit game.");
                         Console.WriteLine();
                         break;
                     case "start":
@@ -241,6 +247,22 @@ namespace FirstPerson
                         {
                             Fog = float.Parse(paramString);
                             Console.WriteLine("FPS set to " + FPS + ".");
+                        }
+                        break;
+                    case "gridwidth":
+                        if (String.IsNullOrEmpty(paramString)) Console.WriteLine(GridWidth);
+                        else
+                        {
+                            GridWidth = uint.Parse(paramString);
+                            Console.WriteLine("GridWidth set to " + GridWidth + ".");
+                        }
+                        break;
+                    case "gridlength":
+                        if (String.IsNullOrEmpty(paramString)) Console.WriteLine(GridLength);
+                        else
+                        {
+                            GridLength = uint.Parse(paramString);
+                            Console.WriteLine("GridLength set to " + GridLength + ".");
                         }
                         break;
                     default:
