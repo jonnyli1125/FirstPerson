@@ -68,8 +68,7 @@ namespace FirstPerson
                 Cursor.Position = p;
                 Facing += MouseDelta.X / (1000 - (float)(HorizontalSensitivity * 100));
                 Pitch -= MouseDelta.Y / (1000 - (float)(VerticalSensitivity * 100));
-                // because looking straight up or straight down (tand(90)) is a no-no.
-                if (Pitch < -1.5f) Pitch = -1.5f; // 4 decimal places seems pretty smooth!?!?!?
+                if (Pitch < -1.5f) Pitch = -1.5f;
                 if (Pitch > 1.5f) Pitch = 1.5f;
                 Vector3 lookatPoint = new Vector3((float)Math.Cos(Facing), (float)Math.Tan(Pitch), (float)Math.Sin(Facing));
                 CameraMatrix = Matrix4.LookAt(Position, Position + lookatPoint, Up);
