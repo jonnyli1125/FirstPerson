@@ -4,7 +4,7 @@ using System;
 
 namespace FirstPerson
 {
-    public class MeshBuffers
+    public class MeshBuffer
     {
         public Vector3[] VertexData;
         public Vector3[] NormalData;
@@ -15,6 +15,15 @@ namespace FirstPerson
         public int NormalBufferID;
         public int ColorBufferID;
         public int IndicesBufferID;
+
+        public MeshBuffer() { }
+        public MeshBuffer(Vector3[] vertexData, Vector3[] normalData, int[] colorData, uint[] indicesData)
+        {
+            VertexData = vertexData;
+            NormalData = normalData;
+            ColorData = colorData;
+            IndicesData = indicesData;
+        }
 
         public void GenerateBuffers()
         {
@@ -80,6 +89,13 @@ namespace FirstPerson
                 GL.DrawElements(BeginMode.Triangles, IndicesData.Length,
                                 DrawElementsType.UnsignedInt, IntPtr.Zero);
             }
+        }
+
+        public static MeshBuffer Generate(Vector3[] vertexData, Vector3[] normalData, int[] colorData, uint[] indicesData)
+        {
+            var meshBuffer = new MeshBuffer(vertexData, normalData, colorData, indicesData);
+            meshBuffer.GenerateBuffers();
+            return meshBuffer;
         }
     }
 }
